@@ -1,0 +1,4 @@
+<launch>
+    <arg name="navigation" default="$(find my_robot_name_2dnav)/rviz/navigation.rviz"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg navigation)"/>
+</launch>

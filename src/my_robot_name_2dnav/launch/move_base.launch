@@ -22,10 +22,11 @@
         <rosparam file="$(find my_robot_name_2dnav)/param/constmap/local_costmap_params.yaml" command="load"/>
         <rosparam file="$(find my_robot_name_2dnav)/param/constmap/global_costmap_params.yaml" command="load"/>
         <rosparam file="$(find my_robot_name_2dnav)/param/constmap/teb_local_planner_params_diff.yaml" command="load"/>
-        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/base_global_planner_params.yaml" command="load"/>
+<!--        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/base_local_planner_params_old.yaml" command="load"/>-->
+        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/navfn_global_planner_params.yaml" command="load"/>
         <rosparam file="$(find my_robot_name_2dnav)/param/constmap/move_base_params.yaml" command="load"/>
     </node>
-    <node name="robot_pose_publisher" pkg="robot_pose_publisher" type="robot_pose_publisher"/>
+<!--    <node name="robot_pose_publisher" pkg="robot_pose_publisher" type="robot_pose_publisher"/>-->
     <!--    <node name="multi_mark" pkg="rikirobot" type="show_mark.py" output="screen"/>-->
     <!-- reset frame_id parameters using user input data -->
     <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>

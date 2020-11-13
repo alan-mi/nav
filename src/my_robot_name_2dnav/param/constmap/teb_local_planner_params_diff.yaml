@@ -3,7 +3,11 @@ TebLocalPlannerROS:
  odom_topic: odom
     
  # Trajectory
-  
+ # “Trajectory”部分的参数用于调整轨迹，
+ # “global_plan_viapoint_sep”参数调整全局路径上选取的航迹点的间隔，应根据机器人的尺寸大小调整，我们机器人的长宽为0.8*0.5(米)，这里修改为0.3，使航迹点更为紧凑；
+ # “max_global_plan_lookahead_dist”参数在TebLocalPlannerROS::transformGlobalPlan()函数中被使用，决定局部规划初始轨迹的最大长度，实际调试发现此参数无需过大，因为局部轨迹在每个控制周期都被更新，实际执行的指令仅是轨迹上第一个点的速度值，这里设置为1.5即可，过长也可能导致优化结果无法有效收敛；
+ # “global_plan_prune_distance”参数在TebLocalPlannerROS::pruneGlobalPlan()函数中被使用，因为全局路径是从全局起始点到全局目标点的一条轨迹，而初始的局部路径仅是从机器人当前位置到局部目标点的一小段路径，全局路径裁剪其中一部分即局部路径，该参数决定了从机器人当前位置的后面一定距离开始裁剪；
+ # “feasibility_check_no_poses”参数在判断生成的轨迹是否冲突时使用，此时设置为3，即从轨迹起点开始逐个检查轨迹上的3个点，若3个点均不发生碰撞，则认为本次轨迹有效，由于teb优化并非硬约束，这里相当于是轨迹生成之后的一层保障，这个参数因根据机器人的速度和环境复杂程度调整，否则极有可能出现在狭窄环境中走走停停的情况；:
  teb_autosize: True
  dt_ref: 0.3
  dt_hysteresis: 0.1
@@ -11,18 +15,18 @@ TebLocalPlannerROS:
  global_plan_overwrite_orientation: True
  allow_init_with_backwards_motion: False
  max_global_plan_lookahead_dist: 3.0
- global_plan_viapoint_sep: -1
+ global_plan_viapoint_sep: 1 # 贴合全局路径不会中途后退 需要设置 weight_viapoint
  global_plan_prune_distance: 1
- exact_arc_length: False
+ exact_arc_length: False # 如果为true，则计划程序在速度，加速度和转弯速率计算中使用精确的弧长（->增加的cpu时间），否则使用欧几里得近似。
  feasibility_check_no_poses: 5
  publish_feedback: False
     
  # Robot
          
- max_vel_x: 0.3
+ max_vel_x: 1
  max_vel_x_backwards: 0.2
  max_vel_y: 0.0
- max_vel_theta: 0.5
+ max_vel_theta: 1
  acc_lim_x: 0.5
  acc_lim_theta: 0.5
  min_turning_radius: 0.0 # diff-drive robot (can turn on place!)
@@ -34,13 +38,13 @@ TebLocalPlannerROS:
     
  xy_goal_tolerance: 0.2
  yaw_goal_tolerance: 0.1
- free_goal_vel: False
+ free_goal_vel: False # “free_goal_vel”参数设置机器人在目标点速度的情况，Fasle为默认最终速度为0，即到目标位置的时候应该是保持静止状态。
  complete_global_plan: True
     
  # Obstacles
     
- min_obstacle_dist: 0.3 # This value must also include our robot radius, since footprint_model is set to "point".
- inflation_dist: 0.5
+ min_obstacle_dist: 0.6 # This value must also include our robot radius, since footprint_model is set to "point".
+ inflation_dist: 0.8
  include_costmap_obstacles: True
  costmap_obstacles_behind_robot_dist: 1.5
  obstacle_poses_affected: 15
@@ -65,7 +69,7 @@ TebLocalPlannerROS:
  weight_acc_lim_x: 1
  weight_acc_lim_theta: 1
  weight_kinematics_nh: 1000
- weight_kinematics_forward_drive: 1000
+ weight_kinematics_forward_drive: 1000 #强制机器人仅选择正向（正的平移速度）的优化权重
  weight_kinematics_turning_radius: 1
  weight_optimaltime: 1 # must be > 0
  weight_shortest_path: 0
@@ -73,7 +77,7 @@ TebLocalPlannerROS:
  weight_inflation: 0.2
  weight_dynamic_obstacle: 10
  weight_dynamic_obstacle_inflation: 0.2
- weight_viapoint: 1
+ weight_viapoint: 2
  weight_adapt_factor: 2
 
  # Homotopy Class Planner

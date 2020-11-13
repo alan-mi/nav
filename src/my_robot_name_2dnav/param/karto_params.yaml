@@ -1,7 +1,24 @@
+odom_frame: odom #（字符串，默认值：“ odom ”）
+#框架连接到里程表系统。
+map_frame: map #（字符串，默认值：“地图”）
+#附加到地图的框架。
+base_frame: base_footprint #（字符串，默认值：“ base_link”）
+#框架固定在移动底座上。
+throttle_scans: 1 #（int，默认值：1）
+#在所有如此多的扫描中处理1（将其设置为更高的数字以跳过更多扫描）
+map_update_interval: 10 #（float，默认值：5.0）
+#两次更新之间的时间间隔（以秒为单位）。降低此数字会更频繁地更新占用网格，以增加计算负荷为代价。
+resolution: 0.05 #（float，默认值：0.05）
+#地图的分辨率（以米为单位，每个占用栅格块）
+delta: 0.05 #（float，默认值：0.05）
+#地图的分辨率（每个占用栅格块的米数）。与分辨率相同。定义为与gmapping的参数名称兼容。
+transform_publish_period: 0.05 #（float，默认值：0.05）
+#转换发布之间的时间间隔（以秒为单位）。要禁用广播转换，请设置为0。
+
 # General Parameters
 use_scan_matching: true
 use_scan_barycenter: true
-minimum_travel_distance: 0.2 
+minimum_travel_distance: 0.2
 minimum_travel_heading: 0.174                  #in radians
 scan_buffer_size: 70
 scan_buffer_maximum_scan_distance: 20.0

@@ -1,6 +1,6 @@
-#base_global_planner: global_planner/GlobalPlanner
-base_global_planner: navfn/NavfnROS
-base_local_planner: teb_local_planner/TebLocalPlannerROS
+base_global_planner: navfn/NavfnROS #alternatives: navfn/NavfnROS, global_planner/GlobalPlanner, carrot_planner/CarrotPlanner
+
+base_local_planner: teb_local_planner/TebLocalPlannerROS #alternatives: teb_local_planner/TebLocalPlannerROS, dwa_local_planner/DWAPlannerROS,  base_local_planner/TrajectoryPlannerROS
 
 shutdown_costmaps: false
 
