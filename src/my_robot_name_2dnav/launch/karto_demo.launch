@@ -8,5 +8,17 @@
 
   <!-- Move base -->
 <!-- <include file="$(find navigation_sim_demo)/launch/include/move_base.launch.xml"/>-->
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/costmap_common_params.yaml" command="load"
+                  ns="global_costmap"/>
+        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/costmap_common_params.yaml" command="load"
+                  ns="local_costmap"/>
+        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/local_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/global_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/teb_local_planner_params_diff.yaml" command="load"/>
+<!--        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/base_local_planner_params_old.yaml" command="load"/>-->
+        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/navfn_global_planner_params.yaml" command="load"/>
+        <rosparam file="$(find my_robot_name_2dnav)/param/constmap/move_base_params.yaml" command="load"/>
+    </node>
  
 </launch>

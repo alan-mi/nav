@@ -1,5 +1,5 @@
 local_costmap:
-  global_frame: odom # 在局部代价地图中的全局坐标系，一般需要设置为odom_frame;
+  global_frame: map # 在局部代价地图中的全局坐标系，一般需要设置为odom_frame;
   robot_base_frame: base_footprint # 机器人本体的基坐标系;
   update_frequency: 5.0 # 局部代价地图的更新频率;
   publish_frequency: 2.0 # 局部代价地图的发布频率;
@@ -9,6 +9,9 @@ local_costmap:
   height: 4 # 滚动窗口的高度，单位是米;
   resolution: 0.05 # 地图的分辨率，该分辨率可以从加载的地图相对应的配置文件中获取到;
   transform_tolerance: 0.5 # 局部代价地图中的坐标系之间转换的最大可忍受延时;
+  cost_scaling_factor: 2.8 # 膨胀过程中应用到代价值的比例因子
+  inflation_radius: 0.6 # 膨胀半径，膨胀层会把障碍物代价膨胀直到该半径为止，一般将该值设置为机器人底盘的直径大小。如果机器人经常撞到障碍物就需要增大该值，若经常无法通过狭窄地方就减小该值。
+
   plugins: # 在局部代价地图中，不需要静态地图层，因为我们使用滚动窗口来不断的扫描障碍物，所以就需要融合两层地图（inflation_layer和obstacle_layer）即可，融合后的地图用于进行局部路径规划;
     - {name: obstacle_layer,  type: "costmap_2d::ObstacleLayer"}
     - {name: inflation_layer, type: "costmap_2d::InflationLayer"}

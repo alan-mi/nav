@@ -5,9 +5,8 @@
     <!--    </node>-->
     <include file="$(find my_robot_name_2dnav)/launch/robot.launch"/>
     <include file="$(find my_robot_name_2dnav)/launch/rplidar.launch"/>
-<!--    <include file="$(find my_robot_name_2dnav)/launch/camera.launch"/>-->
-<!--    <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera"-->
-<!--          args="0.2 0 0.1 0 0 0  /base_link /camera_link  100"/>-->
+<!--    <include file="$(find astra_camera)/launch/astrapro.launch"/>-->
+<!--    <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera" args="0.1 0 0.08 0 0 0  /base_link /camera_link  100"/>-->
 
     <!--    <node pkg="odom_node_pkg" type="odom_node_type" name="odom_node" output="screen">-->
     <!--        <param name="odom_param" value="param_value"/>-->

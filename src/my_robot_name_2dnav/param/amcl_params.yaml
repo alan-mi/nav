@@ -1,5 +1,5 @@
-min_particles: 1000 # ~min_particles (int, default: 100)：滤波器中的最少粒子数，值越大定位效果越好，但是相应的会增加主控平台的计算资源消耗。
-max_particles: 10000 # ~max_particles (int, default: 5000)：滤波器中最多粒子数，是一个上限值，因为太多的粒子数会导致系统资源消耗过多。
+min_particles: 100 # ~min_particles (int, default: 100)：滤波器中的最少粒子数，值越大定位效果越好，但是相应的会增加主控平台的计算资源消耗。
+max_particles: 1000 # ~max_particles (int, default: 5000)：滤波器中最多粒子数，是一个上限值，因为太多的粒子数会导致系统资源消耗过多。
 kld_err: 0.01 # ~kld_err (double, default: 0.01)：真实分布与估计分布之间的最大误差。
 kld_z: 0.99 # ~kld_z (double, default: 0.99)：上标准分位数（1-p），其中p是估计分布上误差小于kld_err的概率，默认0.99。
 update_min_d: 0.2 # ~update_min_d (double, default: 0.2 meters)：在执行滤波更新前平移运动的距离，默认0.2m(对于里程计模型有影响，模型中根据运动和地图求最终位姿的似然时丢弃了路径中的相关所有信息，已知的只有最终位姿，为了规避不合理的穿过障碍物后的非零似然，这个值建议不大于机器人半径，否则因更新频率的不同可能产生完全不同的结果)。
@@ -38,7 +38,7 @@ laser_model_type: likelihood_field # ~laser_model_type (string, default: "likeli
 #
 odom_model_type: diff # ~odom_model_type (string, default: "diff")：odom模型定义，可以是"diff", "omni", "diff-corrected", "omni-corrected"，后面两个是对老版本里程计模型的矫正，相应的里程计参数需要做一定的减小。
 odom_alpha1: 1 # ~odom_alpha1 (double, default: 0.2)：指定由机器人运动部分的旋转分量估计的里程计旋转的期望噪声，默认0.2（旋转存在旋转噪声）。
-odom_alpha2: 1 # ~odom_alpha2 (double, default: 0.2)：机器人运动部分的平移分量估计的里程计旋转的期望噪声，默认0.2（旋转中可能出现平移噪声）。
+odom_alpha2: 1 #   ~odom_alpha2 (double, default: 0.2)：机器人运动部分的平移分量估计的里程计旋转的期望噪声，默认0.2（旋转中可能出现平移噪声）。
 odom_alpha3: 1 # ~odom_alpha3 (double, default: 0.2)：机器人运动部分的平移分量估计的里程计平移的期望噪声，如果你自认为自己机器人的里程计信息比较准确那么就可以将该值设置的很小。
 odom_alpha4: 1 # ~odom_alpha4 (double, default: 0.2)：机器人运动部分的旋转分量估计的里程计平移的期望噪声，你设置的这4个alpha值越大说明里程计的误差越大。
 odom_alpha5: 0.0 # ~odom_alpha5 (double, default: 0.2)：平移相关的噪声参数（仅用于模型是“omni”的情况，就是当你的机器人是全向移动时才需要设置该参数，否则就设置其为0.0）
