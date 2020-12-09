@@ -8,15 +8,15 @@ base_local_planner: teb_local_planner/TebLocalPlannerROS #alternatives: teb_loca
 shutdown_costmaps: false # shutdown_costmaps:当move_base在不活动状态时,是否关掉costmap.
 
 controller_frequency: 5.0 # 20.0 # controller_frequency:向底盘控制移动话题cmd_vel发送命令的频率.
-controller_patience: 15.0 # controller_patience:等待控制速度的时间间隔，如果控制速度的发布超过设置时间，则认为局部路径规划失败 在空间清理操作执行前,控制器花多长时间等有效控制下发.
+controller_patience: 5.0 # controller_patience:等待控制速度的时间间隔，如果控制速度的发布超过设置时间，则认为局部路径规划失败 在空间清理操作执行前,控制器花多长时间等有效控制下发.
 
-planner_frequency: 0.1 # planner_frequency:全局规划操作的执行频率.如果设置为0.0,则全局规划器仅在接收到新的目标点或者局部规划器报告路径堵塞时才会重新执行规划操作.
+planner_frequency: 0.5 # planner_frequency:全局规划操作的执行频率.如果设置为0.0,则全局规划器仅在接收到新的目标点或者局部规划器报告路径堵塞时才会重新执行规划操作.
 planner_patience: 5.0 # planner_patience:进行全局规划的时间间隔，如果超时则认为规划失败 在空间清理操作执行前,留给规划器多长时间来找出一条有效规划.
 
 oscillation_timeout: 10.0 # oscillation_timeout:执行修复机制前,允许振荡的时长.
 oscillation_distance: 0.2 # oscillation_distance:来回运动在多大距离以上不会被认为是振荡.
 
-conservative_reset_dist: 3.0 # 在恢复模块执行后，重置的代价地图范围
+conservative_reset_dist: 3.0 # 在恢复模块执行后，重置的代价地图范围 米
 
 clearing_rotation_allowed: true # 是否允许旋转恢复行为，默认为true
 

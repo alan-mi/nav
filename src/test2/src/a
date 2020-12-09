@@ -1,0 +1,29 @@
+header:
+  seq: 33
+  stamp:
+    secs: 2705
+    nsecs: 565000000
+  frame_id: ''
+goal_id:
+  stamp:
+    secs: 0
+    nsecs:         0
+  id: ''
+goal:
+  target_pose:
+    header:
+      seq: 32
+      stamp:
+        secs: 2705
+        nsecs: 565000000
+      frame_id: "map"
+    pose:
+      position:
+        x: 5.37019443512
+        y: -0.955303192139
+        z: 0.0
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: -0.736800881919
+        w: 0.676109799074

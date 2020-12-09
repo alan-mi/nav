@@ -5,7 +5,7 @@ TebLocalPlannerROS:
  # Trajectory
 
  teb_autosize: true
- dt_ref: 0.3 #期望的轨迹时间分辨率
+ dt_ref: 0.6 #期望的轨迹时间分辨率 设置较小会出现来回摆动现象
  dt_hysteresis: 0.1 #根据当前时间分辨率自动调整大小的滞后现象，通常约为。建议使用dt ref的10%。
  max_samples: 500
  global_plan_overwrite_orientation: true #覆盖由全局规划器提供的局部子目标的方向 true 会向后行走
@@ -19,35 +19,37 @@ TebLocalPlannerROS:
     
  # Robot
          
- max_vel_x: 1.0
- max_vel_x_backwards: 1.0
+ max_vel_x: 0.5
+ max_vel_x_backwards: 0.5
  max_vel_y: 0.0
- max_vel_theta: 2.0
- acc_lim_x: 1.0
- acc_lim_theta: 2.0
+ max_vel_theta: 1
+ acc_lim_x: 1
+ acc_lim_y: 0.0
+ acc_lim_theta: 1
  min_turning_radius: 0.0 # diff-drive robot (can turn on place!)
- cmd_angle_instead_rotvel: false
- wheelbase: 0.0
+# cmd_angle_instead_rotvel: false
+# wheelbase: 0.0
 
  footprint_model:
    type: "point"
+   radius: 0.1
 
  # GoalTolerance
     
- xy_goal_tolerance: 0.6 #目标位置的允许距离误差
- yaw_goal_tolerance: 0.4 #目标位置的允许角度误差
+ xy_goal_tolerance: 0.3 #目标位置的允许距离误差
+ yaw_goal_tolerance: 0.2 #目标位置的允许角度误差
  free_goal_vel: false # “free_goal_vel”参数设置机器人在目标点速度的情况，Fasle为默认最终速度为0，即到目标位置的时候应该是保持静止状态。
  complete_global_plan: true
     
  # Obstacles
     
- min_obstacle_dist: 0.6 # 与障碍的最小期望距离,注意，teb_local_planner本身不考虑膨胀半径
- inflation_dist: 0.6 # 膨胀距离 障碍物周围缓冲区(应大于min_obstacle_dist才能生效)
+ min_obstacle_dist: 0.15 # 与障碍的最小期望距离,注意，teb_local_planner本身不考虑膨胀半径
+ inflation_dist: 0.4 # 膨胀距离 障碍物周围缓冲区(应大于min_obstacle_dist才能生效)
  include_costmap_obstacles: true #应否考虑到局部costmap的障碍
  costmap_obstacles_behind_robot_dist: 1.5
- obstacle_poses_affected: 15
+ obstacle_poses_affected: 3
 
- dynamic_obstacle_inflation_dist: 0.6
+ dynamic_obstacle_inflation_dist: 0.3
  include_dynamic_obstacles: true
 
  costmap_converter_plugin: ""
@@ -56,23 +58,23 @@ TebLocalPlannerROS:
 
  # Optimization
     
- no_inner_iterations: 5
- no_outer_iterations: 4
+ no_inner_iterations: 3  # 较少迭代次数可以提高运行稳定性 设置较大不容易找到最优路线，容易出现路线跳跃
+ no_outer_iterations: 2  # 较少迭代次数可以提高运行稳定性
  optimization_activate: true
  optimization_verbose: false
- penalty_epsilon: 0.7 #为硬约束近似的惩罚函数添加一个小的安全范围
+ penalty_epsilon: 0.0 #为硬约束近似的惩罚函数添加一个小的安全范围  极大的影响优化结果  太大会导致不能收敛 优化问题会变得病态
  obstacle_cost_exponent: 4
- weight_max_vel_x: 2 #满足最大允许平移速度的优化权重
+ weight_max_vel_x: 2 #满足最大允许平移速度的优化权重 不设置 penalty_epsilon 速度惩罚函数 不起作用
  weight_max_vel_theta: 1 #满足最大允许平移速度的优化权重
  weight_acc_lim_x: 1 #满足最大允许平移加速度的优化权重。
  weight_acc_lim_theta: 1 #满足最大允许角加速度的优化权重。
- weight_kinematics_nh: 1000 # #运动学的优化权重 参数应设置较小值，因为我们是完整约束机器人无需限制其运动学约束。
+ weight_kinematics_nh: 3000 # #运动学的优化权重 参数应设置较小值，因为我们是完整约束机器人无需限制其运动学约束。
  weight_kinematics_forward_drive: 1000 #强制机器人仅选择正向（正的平移速度）的优化权重
- weight_kinematics_turning_radius: 0.1  #采用最小转向半径的优化权重
- weight_optimaltime: 0.1 # must be > 0 #根据转换/执行时间对轨迹进行收缩的优化权重。
+ weight_kinematics_turning_radius: 0.0  #采用最小转向半径的优化权重  调大参数会靠近障碍物
+ weight_optimaltime: 0.6 # must be > 0 #根据转换/执行时间对轨迹进行收缩的优化权重。 太大会导致穿越障碍物
  weight_shortest_path: 0
- weight_obstacle: 100 #保持与障碍物的最小距离的优化权重
- weight_inflation: 0.2 #膨胀半径权重
+ weight_obstacle: 10 #保持与障碍物的最小距离的优化权重 设置小一点得值 太大会导致不能收敛 优化问题会变得病态
+ weight_inflation: 0.1 #膨胀半径权重
  weight_dynamic_obstacle: 10
  weight_dynamic_obstacle_inflation: 0.2
  weight_viapoint: 2 #跟踪全据路径的权重

@@ -1,0 +1,12 @@
+<launch>
+    <!--    <include file="$(find test2)/script/pub.py"/>-->
+    <node pkg="test2" type="pub.py" respawn="false" name="pub999" output="screen">
+<!--        <remap from="/own/pub" to="/pub"/>-->
+        <!--    <remap from="scan" to="$(arg laser_topic)"/>-->
+        <!--    <remap from="cmd_vel" to="/cmd_vel_mux/input/navi"/>-->
+        <!--    <remap from="/own/pub" to="/pub"/>-->
+    </node>
+    <node pkg="test2" type="sub.py" respawn="false" name="sub999" output="screen">
+                <remap from="/pub" to="/own/pub"/>
+    </node>
+</launch>

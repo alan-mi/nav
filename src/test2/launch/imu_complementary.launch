@@ -1,0 +1,18 @@
+<launch>
+    <node pkg="imu_complementary_filter" type="complementary_filter_node"
+          name="complementary_filter_gain_node" output="screen">
+        <param name="fixed_frame" value="imu_complementary_link"/>
+        <param name="do_bias_estimation" value="true"/>
+        <param name="do_adaptive_gain" value="true"/>
+        <param name="use_mag" value="false"/>
+        <param name="gain_acc" value="0.01"/>
+        <param name="gain_mag" value="0.01"/>
+        <param name="publish_debug_topics" value="false"/>
+        <param name="publish_tf" value="true"/>
+        <remap from="/imu/data" to="/imu/complementary"/>
+<!--        <param name="frame_id" value="/imu_complementary_link" />-->
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_imu_link_complementary"
+          args="0 -1 0 0 0 0  /base_footprint /imu_complementary_link  1"/>
+
+</launch>
